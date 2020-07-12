@@ -1,4 +1,4 @@
-# typescript-app
+# typescript-vue-sap-app
 
 ## Project setup
 ```

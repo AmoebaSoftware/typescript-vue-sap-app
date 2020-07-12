@@ -1,32 +1,50 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view />
+    <AppHeader></AppHeader>
+    <fd-container centered>
+      <ProductTable v-bind:products="products" v-if="!isLoading"/>
+    </fd-container>
   </div>
 </template>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script>
+import ProductTable from './components/ProductTable'
+import AppHeader from './components/AppHeader';
+import axios from 'axios';
 
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
+export default {
+  name: 'App',
+  components: {
+    ProductTable,
+    AppHeader,
+  },
+  data() {
+    return {
+      isLoading: true,
+      products: null
     }
-  }
+  },
+  mounted () {
+    axios
+      .get('https://services.odata.org/Experimental/OData/OData.svc/Products')
+      .then(response => (this.products = response.data.value))
+      .then(() => this.isLoading = false)
+      .catch((err) => console.error(err))
+  },
 }
+</script>
+
+<style lang='scss'>
+  @import "./scss/main.scss";
+  #app {
+    font-family: Avenir, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
+    color: #2c3e50;
+  }
+
+  table {
+    margin-top: 3rem;
+  }
 </style>

@@ -25,57 +25,64 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: "ProductTable",
-  props: ["products"],
-  data() {
-    return {
-      searchTerm: null,
-      headers: [
-        {
-          key: "Name",
-          label: "Name",
-          sortable: true,
-          sortBy: "Name"
-        },
-        "Description",
-        {
-          label: "Release Date",
-          key: "ReleaseDate",
-          sortable: true,
-          sortBy: "ReleaseDate"
-        },
-        {
-          label: "Rating",
-          key: "Rating",
-          sortable: true,
-          sortBy: "Rating"
-        },
-        {
-          label: "Price",
-          key: "Price",
-          sortable: true,
-          sortBy: "Price"
-        }
-      ]
-    };
-  },
-  methods: {
-    getFilteredCollection(collection, searchTerm, searchProp) {
-        return !searchTerm ? collection : this.filterItems(collection, searchTerm, searchProp);
+<script lang="ts">
+import { Component, Prop, Vue } from 'vue-property-decorator';
+
+@Component({})
+export default class AppHeader extends Vue {
+  @Prop() products!: any[];
+  searchTerm = '';
+  headers = [
+    {
+      key: 'Name',
+      label: 'Name',
+      sortable: true,
+      sortBy: 'Name',
     },
-    filterItems(items, searchTerm, keys) {
-        return items.filter((item) => keys.some(key => String(item[key]).toLowerCase().includes(searchTerm.toLowerCase())));
-    }
-  },
-  computed: {
-    filteredProducts: function() {
-      return this.getFilteredCollection(this.products, this.searchTerm, ['Name', 'Description']);
-    }
+    'Description',
+    {
+      label: 'Release Date',
+      key: 'ReleaseDate',
+      sortable: true,
+      sortBy: 'ReleaseDate',
+    },
+    {
+      label: 'Rating',
+      key: 'Rating',
+      sortable: true,
+      sortBy: 'Rating',
+    },
+    {
+      label: 'Price',
+      key: 'Price',
+      sortable: true,
+      sortBy: 'Price',
+    },
+  ];
+
+  getFilteredCollection(collection: any[], searchTerm: string, searchProp: string[]): any[] {
+    return !searchTerm
+      ? collection
+      : this.filterItems(collection, searchTerm, searchProp);
   }
-};
+
+  filterItems(items: any[], searchTerm: string, keys: string[]): any[] {
+    return items.filter((item) =>
+      keys.some((key) =>
+        String(item[key])
+          .toLowerCase()
+          .includes(searchTerm.toLowerCase())
+      )
+    );
+  }
+
+  get filteredProducts() {
+    return this.getFilteredCollection(this.products, this.searchTerm, [
+      'Name',
+      'Description',
+    ]);
+  }
+}
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

@@ -12,6 +12,7 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
 import ProductTable from '@/components/ProductTable.vue';
 import AppHeader from '@/components/AppHeader.vue';
 import axios from 'axios';
+import { Product } from './models/product';
 
 @Component({
   components: {
@@ -22,7 +23,7 @@ import axios from 'axios';
 export default class App extends Vue {
   private readonly endpointUrl = 'https://services.odata.org/Experimental/OData/OData.svc/Products';
   private isLoading = true;
-  private products: any;
+  private products!: Product[];
 
   mounted() {
     axios

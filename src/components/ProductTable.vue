@@ -27,10 +27,10 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
-
+import { Product } from '../models/product';
 @Component({})
 export default class AppHeader extends Vue {
-  @Prop() products!: any[];
+  @Prop() products!: Product[];
   searchTerm = '';
   headers = [
     {

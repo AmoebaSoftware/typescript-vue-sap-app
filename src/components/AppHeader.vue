@@ -3,7 +3,7 @@
     <fd-shell-bar-group position="start">
       <fd-shell-bar-logo
         alt="SAP"
-        src="assets/sap-logo@2x.png"
+        v-bind:src="logo"
         width="48"
         height="24"
       />
@@ -31,10 +31,11 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
+import { Component, Vue } from 'vue-property-decorator';
 
 @Component({})
 export default class AppHeader extends Vue {
+  private logo = require('../assets/sap-logo@2x.png');
   $refs!: {
     userMenu: any;
   };
